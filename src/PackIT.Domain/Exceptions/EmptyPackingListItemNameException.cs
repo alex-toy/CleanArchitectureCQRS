@@ -1,11 +1,10 @@
 using PackIT.Shared.Abstractions.Exceptions;
 
-namespace PackIT.Domain.Exceptions
+namespace PackIT.Domain.Exceptions;
+
+public class EmptyPackingListItemNameException : PackItException
 {
-    public class EmptyPackingListItemNameException : PackItException
+    public EmptyPackingListItemNameException() : base("Packing item name cannot be empty.")
     {
-        public EmptyPackingListItemNameException() : base("Packing item name cannot be empty.")
-        {
-        }
     }
 }
