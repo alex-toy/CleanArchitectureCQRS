@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using PackIT.Domain.Events;
-using PackIT.Domain.Exceptions;
+using PackIT.Domain.Exceptions.PackingItemExceptions;
 using PackIT.Domain.ValueObjects;
 using PackIT.Shared.Abstractions.Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PackIT.Domain.Entities;
 
@@ -15,22 +15,22 @@ public class PackingList : AggregateRoot<PackingListId>
     private Localization _localization;
     private readonly LinkedList<PackingItem> _items = new();
 
-    //private PackingList(PackingListId id, PackingListName name, Localization localization, LinkedList<PackingItem> items)
-    //    : this(id, name, localization)
-    //{
-    //    _items = items;
-    //}
+    private PackingList(PackingListId id, PackingListName name, Localization localization, LinkedList<PackingItem> items)
+        : this(id, name, localization)
+    {
+        _items = items;
+    }
 
     private PackingList()
     {
     }
 
-    //internal PackingList(PackingListId id, PackingListName name)
-    //{
-    //    Id = id;
-    //    _name = name;
-    //    _localization = localization;
-    //}
+    internal PackingList(PackingListId id, PackingListName name, Localization localization)
+    {
+        Id = id;
+        _name = name;
+        _localization = localization;
+    }
 
     public void AddItem(PackingItem item)
     {
@@ -47,10 +47,7 @@ public class PackingList : AggregateRoot<PackingListId>
 
     public void AddItems(IEnumerable<PackingItem> items)
     {
-        foreach (var item in items)
-        {
-            AddItem(item);
-        }
+        foreach (var item in items) AddItem(item);
     }
 
     public void PackItem(string itemName)

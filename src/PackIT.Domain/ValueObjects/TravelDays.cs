@@ -1,25 +1,19 @@
-using PackIT.Domain.Exceptions;
+using PackIT.Domain.Exceptions.TravelDaysExceptions;
 
-namespace PackIT.Domain.ValueObjects
+namespace PackIT.Domain.ValueObjects;
+
+public record TravelDays
 {
-    public record TravelDays
+    public ushort Value { get; }
+
+    public TravelDays(ushort value)
     {
-        public ushort Value { get; }
-
-        public TravelDays(ushort value)
-        {
-            if (value is 0 or > 100)
-            {
-                throw new InvalidTravelDaysException(value);
-            }
-            
-            Value = value;
-        }
-
-        public static implicit operator ushort(TravelDays days)
-            => days.Value;
+        if (value is 0 or > 100) throw new InvalidTravelDaysException(value);
         
-        public static implicit operator TravelDays(ushort days)
-            => new(days);
+        Value = value;
     }
+
+    public static implicit operator ushort(TravelDays days) => days.Value;
+    
+    public static implicit operator TravelDays(ushort days) => new(days);
 }

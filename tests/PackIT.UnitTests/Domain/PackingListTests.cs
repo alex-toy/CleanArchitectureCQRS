@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using PackIT.Domain.Entities;
 using PackIT.Domain.Events;
-using PackIT.Domain.Exceptions;
+using PackIT.Domain.Exceptions.PackingItemExceptions;
 using PackIT.Domain.Factories;
 using PackIT.Domain.Policies;
 using PackIT.Domain.ValueObjects;

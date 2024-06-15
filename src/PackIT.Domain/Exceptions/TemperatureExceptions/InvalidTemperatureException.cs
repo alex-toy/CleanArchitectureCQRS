@@ -1,6 +1,6 @@
 using PackIT.Shared.Abstractions.Exceptions;
 
-namespace PackIT.Domain.Exceptions
+namespace PackIT.Domain.Exceptions.TemperatureExceptions
 {
     public class InvalidTemperatureException : PackItException
     {
