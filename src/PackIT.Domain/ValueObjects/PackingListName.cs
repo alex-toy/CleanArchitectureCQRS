@@ -1,4 +1,4 @@
-using PackIT.Domain.Exceptions;
+using PackIT.Domain.Exceptions.PackingListExceptions;
 
 namespace PackIT.Domain.ValueObjects;
 

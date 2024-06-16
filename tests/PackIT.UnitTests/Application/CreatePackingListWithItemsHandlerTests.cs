@@ -6,8 +6,8 @@ using PackIT.Application.Commands.Handlers;
 using PackIT.Application.DTO.External;
 using PackIT.Application.Exceptions;
 using PackIT.Application.Services;
-using PackIT.Domain.Consts;
 using PackIT.Domain.Entities;
+using PackIT.Domain.Enums;
 using PackIT.Domain.Factories;
 using PackIT.Domain.Repositories;
 using PackIT.Domain.ValueObjects;
@@ -19,13 +19,13 @@ namespace PackIT.UnitTests.Application
 {
     public class CreatePackingListWithItemsHandlerTests
     {
-        Task Act(CreatePackingListWithItems command)
+        Task Act(PackIT.Application.Commands.CreatePackingListWithItemsCommand command)
             => _commandHandler.HandleAsync(command);
 
         [Fact]
         public async Task HandleAsync_Throws_PackingListAlreadyExistsException_When_List_With_same_Name_Already_Exists()
         {
-            var command = new CreatePackingListWithItems(Guid.NewGuid(), "MyList", 10, Gender.Female, default);
+            var command = new PackIT.Application.Commands.CreatePackingListWithItemsCommand(Guid.NewGuid(), "MyList", 10, Gender.Female, default);
             _readService.ExistsByNameAsync(command.Name).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => Act(command));
@@ -37,7 +37,7 @@ namespace PackIT.UnitTests.Application
         [Fact]
         public async Task HandleAsync_Throws_MissingLocalizationWeatherException_When_Weather_Is_Not_Returned_From_Service()
         {
-            var command = new CreatePackingListWithItems(Guid.NewGuid(), "MyList", 10, Gender.Female,
+            var command = new PackIT.Application.Commands.CreatePackingListWithItemsCommand(Guid.NewGuid(), "MyList", 10, Gender.Female,
                 new LocalizationWriteModel("Warsaw", "Poland"));
             
             _readService.ExistsByNameAsync(command.Name).Returns(false);
@@ -52,7 +52,7 @@ namespace PackIT.UnitTests.Application
         [Fact]
         public async Task HandleAsync_Calls_Repository_On_Success()
         {
-            var command = new CreatePackingListWithItems(Guid.NewGuid(), "MyList", 10, Gender.Female,
+            var command = new PackIT.Application.Commands.CreatePackingListWithItemsCommand(Guid.NewGuid(), "MyList", 10, Gender.Female,
                 new LocalizationWriteModel("Warsaw", "Poland"));
             
             _readService.ExistsByNameAsync(command.Name).Returns(false);
@@ -68,7 +68,7 @@ namespace PackIT.UnitTests.Application
 
         #region ARRANGE
 
-        private readonly ICommandHandler<CreatePackingListWithItems> _commandHandler;
+        private readonly ICommandHandler<PackIT.Application.Commands.CreatePackingListWithItemsCommand> _commandHandler;
         private readonly IPackingListRepository _repository;
         private readonly IWeatherService _weatherService;
         private readonly IPackingListReadService _readService;
@@ -80,8 +80,8 @@ namespace PackIT.UnitTests.Application
             _weatherService = Substitute.For<IWeatherService>();
             _readService = Substitute.For<IPackingListReadService>();
             _factory = Substitute.For<IPackingListFactory>();
-            
-            _commandHandler = new CreatePackingListWithItemsHandler(_repository, _factory, _readService, _weatherService);
+
+            _commandHandler = new PackIT.Application.Commands.Handlers.CreatePackingListWithItemsHandler(_repository, _factory, _readService, _weatherService);
         }
 
         #endregion

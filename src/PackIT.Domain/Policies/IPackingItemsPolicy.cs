@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using PackIT.Domain.ValueObjects;
 
-namespace PackIT.Domain.Policies
+namespace PackIT.Domain.Policies;
+
+public interface IPackingItemsPolicy
 {
-    public interface IPackingItemsPolicy
-    {
-        bool IsApplicable(PolicyData data);
-        IEnumerable<PackingItem> GenerateItems(PolicyData data);
-    }
+    bool IsApplicable(PolicyData data);
+    IEnumerable<PackingItem> GenerateItems(PolicyData data);
 }

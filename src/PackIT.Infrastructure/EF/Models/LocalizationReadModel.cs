@@ -1,23 +1,21 @@
 using System.Linq;
 
-namespace PackIT.Infrastructure.EF.Models
-{
-    internal class LocalizationReadModel
-    {
-        public string City { get; set; }
-        public string Country { get; set; }
+namespace PackIT.Infrastructure.EF.Models;
 
-        public static LocalizationReadModel Create(string value)
+internal class LocalizationReadModel
+{
+    public string City { get; set; }
+    public string Country { get; set; }
+
+    public static LocalizationReadModel Create(string value)
+    {
+        string[] splitLocalization = value.Split(',');
+        return new LocalizationReadModel
         {
-            var splitLocalization = value.Split(',');
-            return new LocalizationReadModel
-            {
-                City = splitLocalization.First(),
-                Country = splitLocalization.Last()
-            };
-        }
-        
-        public override string ToString()
-            => $"{City},{Country}";
+            City = splitLocalization.First(),
+            Country = splitLocalization.Last()
+        };
     }
+    
+    public override string ToString() => $"{City},{Country}";
 }

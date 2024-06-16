@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 
-namespace PackIT.Application.Services
+namespace PackIT.Application.Services;
+
+public interface IPackingListReadService
 {
-    public interface IPackingListReadService
-    {
-        Task<bool> ExistsByNameAsync(string name);
-    }
+    Task<bool> ExistsByNameAsync(string name);
 }

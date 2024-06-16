@@ -10,14 +10,14 @@ using PackIT.Shared.Abstractions.Queries;
 
 namespace PackIT.Infrastructure.EF.Queries.Handlers
 {
-    internal sealed class SearchPackingListsHandler : IQueryHandler<SearchPackingLists, IEnumerable<PackingListDto>>
+    internal sealed class SearchPackingListsHandler : IQueryHandler<SearchPackingListsQuery, IEnumerable<PackingListDto>>
     {
         private readonly DbSet<PackingListReadModel> _packingLists;
 
         public SearchPackingListsHandler(ReadDbContext context)
             => _packingLists = context.PackingLists;
         
-        public async Task<IEnumerable<PackingListDto>> HandleAsync(SearchPackingLists query)
+        public async Task<IEnumerable<PackingListDto>> HandleAsync(SearchPackingListsQuery query)
         {
             var dbQuery = _packingLists
                 .Include(pl => pl.Items)

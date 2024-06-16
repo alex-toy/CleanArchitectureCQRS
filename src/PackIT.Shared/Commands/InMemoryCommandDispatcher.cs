@@ -3,21 +3,19 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PackIT.Shared.Abstractions.Commands;
 
-namespace PackIT.Shared.Commands
+namespace PackIT.Shared.Commands;
+
+internal sealed class InMemoryCommandDispatcher : ICommandDispatcher
 {
-    internal sealed class InMemoryCommandDispatcher : ICommandDispatcher
+    private readonly IServiceProvider _serviceProvider;
+
+    public InMemoryCommandDispatcher(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
+
+    public async Task DispatchAsync<TCommand>(TCommand command) where TCommand : class, ICommand
     {
-        private readonly IServiceProvider _serviceProvider;
+        using IServiceScope scope = _serviceProvider.CreateScope();
+        ICommandHandler<TCommand> handler = scope.ServiceProvider.GetRequiredService<ICommandHandler<TCommand>>();
 
-        public InMemoryCommandDispatcher(IServiceProvider serviceProvider)
-            => _serviceProvider = serviceProvider;
-
-        public async Task DispatchAsync<TCommand>(TCommand command) where TCommand : class, ICommand
-        {
-            using var scope = _serviceProvider.CreateScope();
-            var handler = scope.ServiceProvider.GetRequiredService<ICommandHandler<TCommand>>();
-
-            await handler.HandleAsync(command);
-        }
+        await handler.HandleAsync(command);
     }
 }

@@ -2,10 +2,9 @@ using System.Threading.Tasks;
 using PackIT.Application.DTO.External;
 using PackIT.Domain.ValueObjects;
 
-namespace PackIT.Application.Services
+namespace PackIT.Application.Services;
+
+public interface IWeatherService
 {
-    public interface IWeatherService
-    {
-        Task<WeatherDto> GetWeatherAsync(Localization localization);
-    }
+    Task<WeatherDto> GetWeatherAsync(Localization localization);
 }

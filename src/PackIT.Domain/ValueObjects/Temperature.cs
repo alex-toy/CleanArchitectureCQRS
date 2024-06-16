@@ -1,25 +1,22 @@
-using PackIT.Domain.Exceptions;
+using PackIT.Domain.Exceptions.TemperatureExceptions;
 
-namespace PackIT.Domain.ValueObjects
+namespace PackIT.Domain.ValueObjects;
+
+public record Temperature
 {
-    public record Temperature
+    public double Value { get; }
+
+    public Temperature(double value)
     {
-        public double Value { get; }
-
-        public Temperature(double value)
+        if (value is < -100 or > 100)
         {
-            if (value is < -100 or > 100)
-            {
-                throw new InvalidTemperatureException(value);
-            }
-            
-            Value = value;
+            throw new InvalidTemperatureException(value);
         }
-
-        public static implicit operator double(Temperature temperature)
-            => temperature.Value;
         
-        public static implicit operator Temperature(double temperature)
-            => new(temperature);
+        Value = value;
     }
+
+    public static implicit operator double(Temperature temperature) => temperature.Value;
+    
+    public static implicit operator Temperature(double temperature) => new(temperature);
 }

@@ -1,11 +1,10 @@
 using System;
 
-namespace PackIT.Shared.Abstractions.Exceptions
+namespace PackIT.Shared.Abstractions.Exceptions;
+
+public abstract class PackItException : Exception
 {
-    public abstract class PackItException : Exception
+    protected PackItException(string message) : base(message)
     {
-        protected PackItException(string message) : base(message)
-        {
-        }
     }
 }

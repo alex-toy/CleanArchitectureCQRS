@@ -15,8 +15,7 @@ public class PackingList : AggregateRoot<PackingListId>
     private Localization _localization;
     private readonly LinkedList<PackingItem> _items = new();
 
-    private PackingList(PackingListId id, PackingListName name, Localization localization, LinkedList<PackingItem> items)
-        : this(id, name, localization)
+    private PackingList(PackingListId id, PackingListName name, Localization localization, LinkedList<PackingItem> items) : this(id, name, localization)
     {
         _items = items;
     }
